@@ -1,7 +1,7 @@
 {
-    "name": "startbit",
+    "name": "Paibot",
     "version": "0.0.1",
-    "description": "Blocks for Lobot startbit",
+    "description": "Blocks for Paibot",
     "license": "MIT",
     "dependencies": {
         "core": "*"
@@ -9,10 +9,10 @@
     "files": [
         "README.md",
         "main.ts",
-        "StartbitRGBLight.ts",
+        "PaibotRGBLight.ts",
         "sendbuffer.asm",
-        "_locales/zh/startbit-strings.json",
-        "_locales/zh/startbit-jsdoc-strings.json"
+        "_locales/zh/paibot-strings.json",
+        "_locales/zh/paibot-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"

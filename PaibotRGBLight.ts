@@ -1,8 +1,8 @@
 /**
- * StartbitRGBLight package
+ * PaibotRGBLight package
  */
 
-enum StartbitRGBColors {
+enum PaibotRGBColors {
     //% block=red
     Red = 1,
     //% block=orange
@@ -23,7 +23,7 @@ enum StartbitRGBColors {
     White = 9
 }
 
- enum StartbitLights {
+ enum PaibotLights {
     //% block="Light 1"
     Light1 = 0x00,
     //% block="Light 2"
@@ -40,7 +40,7 @@ enum StartbitRGBColors {
      All = 0x06
 }
 
-enum StartbitLightsBelt {
+enum PaibotLightsBelt {
         //% block="Light 1"
         Light1 = 0x00,
         //% block="Light 2"
@@ -68,7 +68,7 @@ enum StartbitLightsBelt {
 /**
  * Different modes for RGB or RGB+W RGBLight QbitRGBColors
  */
-enum StartbitRGBPixelMode {
+enum PaibotRGBPixelMode {
     //% block="RGB (GRB format)"
     RGB = 0,
     //% block="RGB+W"
@@ -80,7 +80,7 @@ enum StartbitRGBPixelMode {
 /**
  * QbitRGBLight Functions
  */
-namespace StartbitRGBLight {
+namespace PaibotRGBLight {
     //% shim=sendBufferAsm
     //% parts="QbitRGBLight"
     function sendBuffer(buf: Buffer, pin: DigitalPin) {
@@ -90,14 +90,14 @@ namespace StartbitRGBLight {
     /**
     * A LHQbitRGBLight class
     */
-    export class LHstartbitRGBLight {
+    export class LHpaibotRGBLight {
         buf: Buffer;
         pin: DigitalPin;
         // TODO: encode as bytes instead of 32bit
         brightness: number;
         start: number; // start offset in LED strip
         _length: number; // number of LEDs
-        _mode: StartbitRGBPixelMode;
+        _mode: PaibotRGBPixelMode;
 
         setBrightness(brightness: number): void {
             this.brightness = brightness & 0xff;
@@ -109,7 +109,7 @@ namespace StartbitRGBLight {
             // don't yield to avoid races on initialization
         }
 
-        setBeltPixelColor(pixeloffset: number, rgb: StartbitRGBColors): void {
+        setBeltPixelColor(pixeloffset: number, rgb: PaibotRGBColors): void {
             if (pixeloffset == 10)//全部
             {
                 for (let i = 0; i < this._length; i++)
@@ -126,7 +126,7 @@ namespace StartbitRGBLight {
             
         }
 
-        setPixelColor(pixeloffset: number, rgb: StartbitRGBColors): void {
+        setPixelColor(pixeloffset: number, rgb: PaibotRGBColors): void {
             if (pixeloffset == this._length)//全部
             {
                 for (let i = 0; i < this._length; i++)
@@ -141,51 +141,51 @@ namespace StartbitRGBLight {
             
         }
 
-        private setPixelRGB(pixeloffset: number, rgb: StartbitRGBColors): void {
+        private setPixelRGB(pixeloffset: number, rgb: PaibotRGBColors): void {
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
                 return;
             let tureRgb = 0;
                 switch (rgb)
                 {
-                    case StartbitRGBColors.Red:
+                    case PaibotRGBColors.Red:
                         tureRgb = 0xFF0000;
                         break;    
     
-                    case StartbitRGBColors.Orange:
+                    case PaibotRGBColors.Orange:
                         tureRgb = 0xFFA500;    
                         break;    
     
-                    case StartbitRGBColors.Yellow:
+                    case PaibotRGBColors.Yellow:
                         tureRgb = 0xFFFF00;
                         break;    
                         
-                    case StartbitRGBColors.Green:
+                    case PaibotRGBColors.Green:
                         tureRgb = 0x00FF00;    
                         break;    
     
-                    case StartbitRGBColors.Blue:
+                    case PaibotRGBColors.Blue:
                         tureRgb = 0x0000FF;
                         break;    
                         
-                    case StartbitRGBColors.Indigo:
+                    case PaibotRGBColors.Indigo:
                         tureRgb = 0x4b0082;    
                         break;    
     
-                    case StartbitRGBColors.Violet:
+                    case PaibotRGBColors.Violet:
                         tureRgb = 0x8a2be2;
                         break;    
                         
-                    case StartbitRGBColors.Purple:
+                    case PaibotRGBColors.Purple:
                         tureRgb = 0xFF00FF;    
                         break;   
     
-                    case StartbitRGBColors.White:
+                    case PaibotRGBColors.White:
                         tureRgb = 0xFFFFFF;    
                         break;   
                 }
 
-            let stride = this._mode === StartbitRGBPixelMode.RGBW ? 4 : 3;
+            let stride = this._mode === PaibotRGBPixelMode.RGBW ? 4 : 3;
             pixeloffset = (pixeloffset + this.start) * stride;
 
             let red = unpackR(tureRgb);
@@ -202,7 +202,7 @@ namespace StartbitRGBLight {
         }
 
         private setBufferRGB(offset: number, red: number, green: number, blue: number): void {
-            if (this._mode === StartbitRGBPixelMode.RGB_RGB) {
+            if (this._mode === PaibotRGBPixelMode.RGB_RGB) {
                 this.buf[offset + 0] = red;
                 this.buf[offset + 1] = green;
             } else {
@@ -217,14 +217,14 @@ namespace StartbitRGBLight {
         }
 
         clear(): void {
-            const stride = this._mode === StartbitRGBPixelMode.RGBW ? 4 : 3;
+            const stride = this._mode === PaibotRGBPixelMode.RGBW ? 4 : 3;
             this.buf.fill(0, this.start * stride, this._length * stride);
             this.show();
         }
     }
-    export function create(pin: DigitalPin, numleds: number, mode: StartbitRGBPixelMode): LHstartbitRGBLight {
-        let light = new LHstartbitRGBLight();
-        let stride = mode === StartbitRGBPixelMode.RGBW ? 4 : 3;
+    export function create(pin: DigitalPin, numleds: number, mode: PaibotRGBPixelMode): LHpaibotRGBLight {
+        let light = new LHpaibotRGBLight();
+        let stride = mode === PaibotRGBPixelMode.RGBW ? 4 : 3;
         light.buf = pins.createBuffer(numleds * stride);
         light.start = 0;
         light._length = numleds;
