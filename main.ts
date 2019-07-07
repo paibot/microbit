@@ -311,7 +311,8 @@ namespace paibot {
         else if (value >= 0xAA)
             return 1;
         else
-            return 2;//未识别电平状�?    }
+            return 2;
+    }
 
     function findIndexof(src: string, strFind: string, startIndex: number): number {
         for (let i = startIndex; i < src.length; i++) {
