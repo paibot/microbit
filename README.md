@@ -7,10 +7,10 @@ MIT
 
 ## Supported targets
 
-* for PXT/Paibot
+* for PXT/paibot
 (The metadata above is needed for package search.)
 
 ```package
-Paibot=github:paibot/microbit
+paibot=github:paibot/microbit
 ```
 
