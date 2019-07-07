@@ -1,10 +1,10 @@
 /*
- startbit package
+ paibot package
 */
 //% weight=10 icon="\uf013" color=#2896ff
-namespace startbit {
+namespace paibot {
 
-    export enum startbit_Colors {
+    export enum paibot_Colors {
         //% block="Red"
         Red = 0x01,
         //% block="Green"
@@ -19,7 +19,7 @@ namespace startbit {
         None = 0x06
     }
 
-    export enum startbit_lineFollower {
+    export enum paibot_lineFollower {
         //% blockId="S1_OUT_S2_OUT" block="Sensor1 and sensor2 are out black line"
         S1_OUT_S2_OUT = 0x00,
         //% blockId="S1_OUT_S2_IN" block="Sensor2 in black line but sensor1 not"
@@ -30,26 +30,26 @@ namespace startbit {
         S1_IN_S2_IN = 0x03
     }
 
-    export enum startbit_colorSensorPort {
+    export enum paibot_colorSensorPort {
         //% block="Port 4"
         port4 = 0x04
     }
 
-    export enum startbit_Servos {
+    export enum paibot_Servos {
         //% block="servo 1"
         Servo1 = 0x01,
         //% block="servo 2"
         Servo2 = 0x02
     }
 
-    export enum startbit_ultrasonicPort {
+    export enum paibot_ultrasonicPort {
         //% block="Port 1"
         port1 = 0x01,
         //% block="Port 2"
         port2 = 0x02
     }
 
-    export enum startbit_touchKeyPort {
+    export enum paibot_touchKeyPort {
         //% block="Port 1"
         port1 = 0x01,
         //% block="Port 2"
@@ -58,68 +58,68 @@ namespace startbit {
         port3 = 0x03
     }
 
-    export enum startbit_lineFollowPort {
+    export enum paibot_lineFollowPort {
         //% block="Port 1"
         port1 = 0x01
     }
 
 
-    export enum startbit_PinIOStatus {
+    export enum paibot_PinIOStatus {
         //% block="Low"
         Low = 0x00,
         //% block="High"
         Hight = 0x01
     }
 
-    export enum startbit_LineFollowerSensor {
+    export enum paibot_LineFollowerSensor {
         //% block="Sensor 1"
         LFSensor_1 = 0x00,
         //% block="Sensor 2"
         LFSensor_2 = 0x01
     }
 
-    export enum startbit_busServoPort {
+    export enum paibot_busServoPort {
         //% block="Port 6"
         port6 = 0x06
     }
 
-    export enum startbit_knobPort {
+    export enum paibot_knobPort {
         //% block="Port 1"
         port1 = 0x01
     }
 	
-    export enum startbit_photosensitivePort {
+    export enum paibot_photosensitivePort {
         //% block="Port 1"
         port1 = 0x01	    
     }
 	
-    export enum startbit_PhotosensitiveSensor {
+    export enum paibot_PhotosensitiveSensor {
         //% block="Port 1"
         port1 = 0x00	    
     }
 
-    export enum startbit_fanPort {
+    export enum paibot_fanPort {
         //% block="Port 1"
         port1,
         //% block="Port 2"
         port2
     }
 
-    export enum startbit_servorange {
+    export enum paibot_servorange {
         //% block="180"
         range1 = 180,
         //% block="270"
         range2 =270
     }
 	
-    export enum startbit_digitaltubePort {
+    export enum paibot_digitaltubePort {
         //% block="Port 1"
         port1 = 0x01,
         //% block="Port 2"
         port2 = 0x02
     }
 	
-    export enum startbit_CmdType {
+    export enum paibot_CmdType {
         //% block="Invalid command"
         NO_COMMAND = 0,
         //% block="car run"
@@ -156,7 +156,7 @@ namespace startbit {
         GET_HAND_CMD = 15
      }
 
-    export enum startbit_CarRunCmdType {
+    export enum paibot_CarRunCmdType {
         //% block="Stop"
         STOP = 0,
         //% block="Go ahead"
@@ -178,11 +178,11 @@ namespace startbit {
     }
 
     /**
-     * Startbit initialization, please execute at boot time
+     * Paibot initialization, please execute at boot time
     */
-    //% weight=100 blockId=startbit_Init block="Initialize Startbit"
-    export function startbit_Init() {
-        startbit_initRGBLight();
+    //% weight=100 blockId=paibot_Init block="Initialize Paibot"
+    export function paibot_Init() {
+        paibot_initRGBLight();
         serial.redirect(
             SerialPin.P12,
             SerialPin.P8,
@@ -198,8 +198,8 @@ namespace startbit {
     let handleCmd: string = "";
     let currentVoltage: number = 0;
     let volume: number = 0;
-    let lhRGBLight: StartbitRGBLight.LHstartbitRGBLight;
-    let lhRGBLightBelt: StartbitRGBLight.LHstartbitRGBLight;
+    let lhRGBLight: PaibotRGBLight.LHpaibotRGBLight;
+    let lhRGBLightBelt: PaibotRGBLight.LHpaibotRGBLight;
 
     let P14_ad = 0;
 
@@ -216,7 +216,7 @@ namespace startbit {
     let macStr: string = "";
     let actiongroup_finished = true;
     
-    let Digitaltube:startbit_TM1640LEDs
+    let Digitaltube:paibot_TM1640LEDs
     let TM1640_CMD1 = 0x40;
     let TM1640_CMD2 = 0xC0;
     let TM1640_CMD3 = 0x80;
@@ -311,8 +311,7 @@ namespace startbit {
         else if (value >= 0xAA)
             return 1;
         else
-            return 2;//未识别电平状态
-    }
+            return 2;//未识别电平状�?    }
 
     function findIndexof(src: string, strFind: string, startIndex: number): number {
         for (let i = startIndex; i < src.length; i++) {
@@ -394,7 +393,7 @@ namespace startbit {
     //% weight=99 blockId=setServo block="Set pwm servo range|range %range|index %index|angle %angle|duration %duration"
     //% angle.min=0 angle.max=270
     //% inlineInputMode=inline
-    export function setServo(range:startbit_servorange, index: number = 1, angle: number, duration: number = 300) {
+    export function setServo(range:paibot_servorange, index: number = 1, angle: number, duration: number = 300) {
 	    
         let position = mapRGB(angle, 0, range, 500, 2500);
 
@@ -417,8 +416,8 @@ namespace startbit {
     * Set the servo controller to run a actiongroup
     * @param times Running times. eg: 1
     */
-    //% weight=96 blockId=startbit_runActionGroup block="Run ActionGroup|index %index|times %times"
-    export function startbit_runActionGroup(index: number, times: number = 1) {
+    //% weight=96 blockId=paibot_runActionGroup block="Run ActionGroup|index %index|times %times"
+    export function paibot_runActionGroup(index: number, times: number = 1) {
 
         let buf = pins.createBuffer(7);
         buf[0] = 0x55;
@@ -436,8 +435,8 @@ namespace startbit {
     /**
     * Stop running actiongroup
     */
-    //% weight=95 blockId=startbit_stopnActionGroup block="Stop ActionGroup"
-    export function startbit_stopActionGroup() {
+    //% weight=95 blockId=paibot_stopnActionGroup block="Stop ActionGroup"
+    export function paibot_stopActionGroup() {
 
         let buf = pins.createBuffer(7);
         buf[0] = 0x55;
@@ -452,8 +451,8 @@ namespace startbit {
     /**
      * Wait for Actiongroup Finishing
      */
-    //% weight=94 blockId=startbit_actionRunover block="Action run over"
-    export function startbit_actionRunover(): boolean {
+    //% weight=94 blockId=paibot_actionRunover block="Action run over"
+    export function paibot_actionRunover(): boolean {
         // let ret = false;
         if (actiongroup_finished == true) {
             // ret = true;
@@ -467,10 +466,10 @@ namespace startbit {
 
 	
     /**
-     * Send read startbit servos angle command
+     * Send read paibot servos angle command
      */
-    //% weight=92 blockId=startbit_readAngle block="Send |%servo|angle command "
-    export function startbit_readAngle(servo: startbit_Servos) {
+    //% weight=92 blockId=paibot_readAngle block="Send |%servo|angle command "
+    export function paibot_readAngle(servo: paibot_Servos) {
         let buf = pins.createBuffer(6);
         buf[0] = 0x55;
         buf[1] = 0x55;
@@ -483,11 +482,11 @@ namespace startbit {
 
 
     /**
-     * Do someting when Startbit receive angle
+     * Do someting when Paibot receive angle
      * @param body code to run when event is raised
      */
-    //% weight=90 blockId=onStartbit_getAngle block="on Startbit|%servo|get angle"
-    export function onStartbit_getAngle(servo: startbit_Servos, body: Action) {
+    //% weight=90 blockId=onPaibot_getAngle block="on Paibot|%servo|get angle"
+    export function onPaibot_getAngle(servo: paibot_Servos, body: Action) {
         control.onEvent(MESSAGE_ANGLE, servo, body);
     }
 
@@ -496,11 +495,11 @@ namespace startbit {
      *  Get servos angle
      */
     //% weight=88 blockId=getServosAngle blockGap=50 block="Get|%servo|angle(-120~120)"
-    export function getServosAngle(servo: startbit_Servos): number {
-        if (servo == startbit_Servos.Servo1) {
+    export function getServosAngle(servo: paibot_Servos): number {
+        if (servo == paibot_Servos.Servo1) {
             return servo1Angle;
         }
-        else if (servo == startbit_Servos.Servo2) {
+        else if (servo == paibot_Servos.Servo2) {
             return servo2Angle;
         }
         else
@@ -512,9 +511,9 @@ namespace startbit {
      *  @param pitch eg: 0
      *  @param roll eg: 0
      */
-    //% weight=91 blockId=startbit_sendAttitude block="Send pitch|%pitch|and roll|%roll"
+    //% weight=91 blockId=paibot_sendAttitude block="Send pitch|%pitch|and roll|%roll"
    /*
-    export function startbit_sendAttitude(pitch: number, roll: number) {
+    export function paibot_sendAttitude(pitch: number, roll: number) {
         pitch < -90 ? -90 : pitch;
         pitch > 90 ? 90 : pitch;
         roll < -90 ? -90 : roll;
@@ -534,10 +533,10 @@ namespace startbit {
     /**
     *	Set the speed of the number 1 motor and number 2 motor, range of -100~100, that can control the tank to go advance or turn of.
     */
-    //% weight=86 blockId=startbit_setMotorSpeed  block="Set motor1 speed(-100~100)|%speed1|and motor2|speed %speed2"
+    //% weight=86 blockId=paibot_setMotorSpeed  block="Set motor1 speed(-100~100)|%speed1|and motor2|speed %speed2"
     //% speed1.min=-100 speed1.max=100
     //% speed2.min=-100 speed2.max=100
-    export function startbit_setMotorSpeed(speed1: number, speed2: number) {
+    export function paibot_setMotorSpeed(speed1: number, speed2: number) {
         if (speed1 > 100 || speed1 < -100 || speed2 > 100 || speed2 < -100) {
             return;
         }
@@ -556,16 +555,16 @@ namespace startbit {
     /**
     *	Set the speed of the fan, range of -100~100.
     */
-    //% weight=84 blockId=startbit_setFanSpeed  block="Set |%port fan speed(-100~100)|%speed1"
+    //% weight=84 blockId=paibot_setFanSpeed  block="Set |%port fan speed(-100~100)|%speed1"
     //% speed1.min=-100 speed1.max=100
-    export function startbit_setFanSpeed(port: startbit_fanPort, speed1: number) {
+    export function paibot_setFanSpeed(port: paibot_fanPort, speed1: number) {
         if (speed1 > 100 || speed1 < -100) {
             return;
         }
         let pin1 = AnalogPin.P1;
         let pin2 = AnalogPin.P2;
 
-        if (port == startbit_fanPort.port2) {
+        if (port == paibot_fanPort.port2) {
             pin1 = AnalogPin.P13;
             pin2 = AnalogPin.P14;
         }
@@ -587,23 +586,23 @@ namespace startbit {
     /**
     * Get the volume level detected by the sound sensor, range 0 to 255
     */
-    //% weight=82 blockId=startbit_getSoundVolume block="Sound volume"
-    export function startbit_getSoundVolume(): number {
+    //% weight=82 blockId=paibot_getSoundVolume block="Sound volume"
+    export function paibot_getSoundVolume(): number {
         return volume;
     }
 
     /**
-     *  Get startbit current voltage,the unit is mV
+     *  Get paibot current voltage,the unit is mV
     */
-    //% weight=80 blockGap=50 blockId=startbit_getBatVoltage block="Get startbit current voltage (mV)"
-    export function startbit_getBatVoltage(): number {
+    //% weight=80 blockGap=50 blockId=paibot_getBatVoltage block="Get paibot current voltage (mV)"
+    export function paibot_getBatVoltage(): number {
         return currentVoltage;
     }
 	
     /**
         * TM1640 LED display
         */
-    export class startbit_TM1640LEDs {
+    export class paibot_TM1640LEDs {
         buf: Buffer;
         clk: DigitalPin;
         dio: DigitalPin;
@@ -758,14 +757,14 @@ namespace startbit {
      * @param intensity the brightness of the LED, eg: 7
      * @param count the count of the LED, eg: 4
      */
-    function startbit_TM1640create(port: startbit_digitaltubePort, intensity: number, count: number): startbit_TM1640LEDs {
-        let digitaltube = new startbit_TM1640LEDs();
+    function paibot_TM1640create(port: paibot_digitaltubePort, intensity: number, count: number): paibot_TM1640LEDs {
+        let digitaltube = new paibot_TM1640LEDs();
         switch (port) {
-            case startbit_digitaltubePort.port1:
+            case paibot_digitaltubePort.port1:
                 digitaltube.clk = DigitalPin.P2;
                 digitaltube.dio = DigitalPin.P1;
                 break;
-            case startbit_digitaltubePort.port2:
+            case paibot_digitaltubePort.port2:
                 digitaltube.clk = DigitalPin.P14;
                 digitaltube.dio = DigitalPin.P13;
                 break;
@@ -784,17 +783,17 @@ namespace startbit {
      * @param intensity the brightness of the LED, eg: 7
      * @param count the count of the LED, eg: 4
      */
-    //% weight=77 blockId=startbit_digitaltube block="digitaltube|%port|intensity %intensity|LED count %count"
-    export function startbit_digitaltube(port: startbit_digitaltubePort, intensity: number, count: number) {
-        Digitaltube = startbit_TM1640create(port, intensity, count);
+    //% weight=77 blockId=paibot_digitaltube block="digitaltube|%port|intensity %intensity|LED count %count"
+    export function paibot_digitaltube(port: paibot_digitaltubePort, intensity: number, count: number) {
+        Digitaltube = paibot_TM1640create(port, intensity, count);
     }
 
     /**
      * show a number. 
      * @param num is a number, eg: 0
      */
-    //% weight=76 blockId=startbit_showNumber block="digitaltube show number| %num"
-    export function startbit_showNumber(num: number)  {
+    //% weight=76 blockId=paibot_showNumber block="digitaltube show number| %num"
+    export function paibot_showNumber(num: number)  {
         Digitaltube.showNumber(num);
     }
 
@@ -803,8 +802,8 @@ namespace startbit {
      * @param num number will show, eg: 5
      * @param bit the position of the LED, eg: 0
      */
-    //% weight=75 blockId=startbit_showbit block="digitaltube show digit| %num|at %bit"
-    export function startbit_showbit(num: number = 5, bit: number = 0) {
+    //% weight=75 blockId=paibot_showbit block="digitaltube show digit| %num|at %bit"
+    export function paibot_showbit(num: number = 5, bit: number = 0) {
         Digitaltube.showbit(num, bit);
     }
 
@@ -812,8 +811,8 @@ namespace startbit {
      * show a hex number. 
      * @param num is a hex number, eg: 0
      */
-    //% weight=74 blockId=startbit_showhex block="digitaltube show hex number| %num"
-    export function startbit_showhex(num: number) {
+    //% weight=74 blockId=paibot_showhex block="digitaltube show hex number| %num"
+    export function paibot_showhex(num: number) {
         Digitaltube.showHex(num);
     }
 
@@ -822,8 +821,8 @@ namespace startbit {
      * @param bit is the position, eg: 1
      * @param show is show/hide dp, eg: true
      */
-    //% weight=73 blockId=startbit_showDP block="digitaltube DotPoint at| %bit|show %show"
-    export function startbit_showDP(bit: number = 1, show: boolean = true) {
+    //% weight=73 blockId=paibot_showDP block="digitaltube DotPoint at| %bit|show %show"
+    export function paibot_showDP(bit: number = 1, show: boolean = true) {
         Digitaltube.showDP(bit, show);
     } 
 
@@ -831,32 +830,32 @@ namespace startbit {
      * set TM1640 intensity, range is [0-8], 0 is off.
      * @param val the brightness of the TM1640, eg: 7
      */
-    //% weight=72 blockId=startbit_intensity block=" digitaltube set intensity %val"
-    export function startbit_intensity(val: number = 7) {
+    //% weight=72 blockId=paibot_intensity block=" digitaltube set intensity %val"
+    export function paibot_intensity(val: number = 7) {
         Digitaltube.intensity(val);
     } 
 
     /**
      * turn off LED. 
      */
-    //% weight=71 blockId=startbit_off block="turn off digitaltube"
-    export function startbit_off() {
+    //% weight=71 blockId=paibot_off block="turn off digitaltube"
+    export function paibot_off() {
         Digitaltube.off();
     }
 
     /**
      * turn on LED. 
      */
-    //% weight=70 blockId=startbit_on block="turn on digitaltube"
-    export function startbit_on() {
+    //% weight=70 blockId=paibot_on block="turn on digitaltube"
+    export function paibot_on() {
         Digitaltube.on();
     }
 
     /**
      * clear LED. 
      */
-    //%weight=69 blockId=startbit_clear blockGap=50 block="clear digitaltube"
-    export function startbit_clear() {
+    //%weight=69 blockId=paibot_clear blockGap=50 block="clear digitaltube"
+    export function paibot_clear() {
         Digitaltube.clear();
     }  
 
@@ -1093,8 +1092,8 @@ namespace startbit {
     /**
      * Initialize the color sensor,please execute at boot time
      */
-    //% weight=87 blockId=startbit_init_colorSensor block="Initialize color sensor port at %port"
-    export function startbit_init_colorSensor(port: startbit_colorSensorPort) {
+    //% weight=87 blockId=paibot_init_colorSensor block="Initialize color sensor port at %port"
+    export function paibot_init_colorSensor(port: paibot_colorSensorPort) {
         InitColor();
         enableLightSensor(true);
         control.waitMicros(100);
@@ -1103,8 +1102,8 @@ namespace startbit {
     /**
 	 *  Color sensor return the color.
 	 */
-    //% weight=86 blockId=startbit_checkCurrentColor block="Current color %color"
-    export function startbit_checkCurrentColor(color: startbit_Colors): boolean {
+    //% weight=86 blockId=paibot_checkCurrentColor block="Current color %color"
+    export function paibot_checkCurrentColor(color: paibot_Colors): boolean {
         let c = i2cread(APDS9960_CDATAL) + i2cread(APDS9960_CDATAH) * 256;
         let r = i2cread(APDS9960_RDATAL) + i2cread(APDS9960_RDATAH) * 256;
         let g = i2cread(APDS9960_GDATAL) + i2cread(APDS9960_GDATAH) * 256;
@@ -1138,22 +1137,22 @@ namespace startbit {
          let hsv = rgb2hue(r, g, b);
         // serial.writeNumber(hsv);
         // serial.writeLine("->hsv");
-        let t = startbit_Colors.None;
+        let t = paibot_Colors.None;
         if (c > 2200 && r > 65 && g > 65 && b > 65) {
-            t = startbit_Colors.White;
+            t = paibot_Colors.White;
         }
         else if (c > 800) {
             if (hsv < 8 || hsv > 350)
-                t = startbit_Colors.Red;
+                t = paibot_Colors.Red;
             else if (hsv > 60 && hsv < 170) {
-                t = startbit_Colors.Green;
+                t = paibot_Colors.Green;
             }
             else if (hsv > 210 && hsv < 230) {
-                t = startbit_Colors.Blue;
+                t = paibot_Colors.Blue;
             }
         }
         else if (c > 200 && r > 10 && g > 7 && b > 7 && r < 16.5 && g < 15 && b < 14) {
-            t = startbit_Colors.Black;
+            t = paibot_Colors.Black;
         }
         return (color == t);
     }
@@ -1161,20 +1160,20 @@ namespace startbit {
     /**
     * Get the obstacle avoidance sensor status,1 detect obstacle,0 no detect obstacle
     */
-    //% weight=85 blockId=startbit_avoidSensor block="Obstacle avoidance sensor|port %port|detect obstacle"
-    export function startbit_avoidSensor(port: startbit_touchKeyPort): boolean {
+    //% weight=85 blockId=paibot_avoidSensor block="Obstacle avoidance sensor|port %port|detect obstacle"
+    export function paibot_avoidSensor(port: paibot_touchKeyPort): boolean {
         let status = 0;
         let flag: boolean = false;
         switch (port) {
-            case startbit_touchKeyPort.port1:
+            case paibot_touchKeyPort.port1:
                 pins.setPull(DigitalPin.P1, PinPullMode.PullUp);
                 status = pins.digitalReadPin(DigitalPin.P1);
                 break;
-            case startbit_touchKeyPort.port2:
+            case paibot_touchKeyPort.port2:
                 pins.setPull(DigitalPin.P13, PinPullMode.PullUp);
                 status = pins.digitalReadPin(DigitalPin.P13);
                 break;
-            case startbit_touchKeyPort.port3:
+            case paibot_touchKeyPort.port3:
                 if (P14_ad > 0xA)
                     status = 1
                 else
@@ -1192,12 +1191,12 @@ namespace startbit {
     /**
     * Get the condition of the line follower sensor
     */
-    //% weight=84 blockId=startbit_readLineFollowerStatus block="Line follower status|port %port|%status"
-    export function startbit_readLineFollowerStatus(port: startbit_lineFollowPort, status: startbit_lineFollower): boolean {
+    //% weight=84 blockId=paibot_readLineFollowerStatus block="Line follower status|port %port|%status"
+    export function paibot_readLineFollowerStatus(port: paibot_lineFollowPort, status: paibot_lineFollower): boolean {
         let s1 = 0;
         let s2 = 0;
         switch (port) {
-            case startbit_lineFollowPort.port1:
+            case paibot_lineFollowPort.port1:
                 s1 = pins.analogReadPin(AnalogPin.P1);
                 s2 = pins.analogReadPin(AnalogPin.P2);
                 s1 = s1 * 255 / 1023;
@@ -1224,19 +1223,19 @@ namespace startbit {
     /**
      * Get the line follower sensor port ad value
      */
-    //% weight=83 blockId=startbit_lineSensorValue block="Get line follower sensor|port %port|%sensor|ad value"
-    export function startbit_lineSensorValue(port: startbit_lineFollowPort, sensor: startbit_LineFollowerSensor): number {
+    //% weight=83 blockId=paibot_lineSensorValue block="Get line follower sensor|port %port|%sensor|ad value"
+    export function paibot_lineSensorValue(port: paibot_lineFollowPort, sensor: paibot_LineFollowerSensor): number {
         let s1 = 0;
         let s2 = 0;
         switch (port) {
-            case startbit_lineFollowPort.port1:
+            case paibot_lineFollowPort.port1:
                 s1 = pins.analogReadPin(AnalogPin.P1);
                 s2 = pins.analogReadPin(AnalogPin.P2);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;
         }
-        if (sensor == startbit_LineFollowerSensor.LFSensor_1) {
+        if (sensor == paibot_LineFollowerSensor.LFSensor_1) {
             return 255 - s1;
         }
         else {
@@ -1247,19 +1246,19 @@ namespace startbit {
     /**
     * Get the condition of the touch button,press return 1,or return 0
     */
-    //% weight=82 blockId=startbit_touchButton block="Touch button|port %port|is pressed"    
-    export function startbit_touchButton(port: startbit_touchKeyPort): boolean {
+    //% weight=82 blockId=paibot_touchButton block="Touch button|port %port|is pressed"    
+    export function paibot_touchButton(port: paibot_touchKeyPort): boolean {
         let status: boolean = false;
         switch (port) {
-            case startbit_touchKeyPort.port1:
+            case paibot_touchKeyPort.port1:
                 pins.setPull(DigitalPin.P1, PinPullMode.PullUp);
                 status = !pins.digitalReadPin(DigitalPin.P1);
                 break;
-            case startbit_touchKeyPort.port2:
+            case paibot_touchKeyPort.port2:
                 pins.setPull(DigitalPin.P13, PinPullMode.PullUp);
                 status = !pins.digitalReadPin(DigitalPin.P13);
                 break;
-            case startbit_touchKeyPort.port3:
+            case paibot_touchKeyPort.port3:
                 if (P14_ad > 0xA)
                     status = false;
                 else
@@ -1273,16 +1272,16 @@ namespace startbit {
     /**
      * Get the distance of ultrasonic detection to the obstacle 
      */
-    //% weight=81 blockId=startbit_ultrasonic  block="Ultrasonic|port %port|distance(cm)"
-    export function startbit_ultrasonic(port: startbit_ultrasonicPort): number {
+    //% weight=81 blockId=paibot_ultrasonic  block="Ultrasonic|port %port|distance(cm)"
+    export function paibot_ultrasonic(port: paibot_ultrasonicPort): number {
         let echoPin: DigitalPin;
         let trigPin: DigitalPin;
         switch (port) {
-            case startbit_ultrasonicPort.port1:
+            case paibot_ultrasonicPort.port1:
                 echoPin = DigitalPin.P2;
                 trigPin = DigitalPin.P1;
                 break;
-            case startbit_ultrasonicPort.port2:
+            case paibot_ultrasonicPort.port2:
                 echoPin = DigitalPin.P14;
                 trigPin = DigitalPin.P13;
                 break;
@@ -1309,8 +1308,8 @@ namespace startbit {
     /**
     * Get the ad value of the knob moudule
     */
-    //% weight=80 blockId=startbit_getKnobValue  block="Get knob|port %port|value(0~255)"
-    export function startbit_getKnobValue(port: startbit_knobPort): number {
+    //% weight=80 blockId=paibot_getKnobValue  block="Get knob|port %port|value(0~255)"
+    export function paibot_getKnobValue(port: paibot_knobPort): number {
         let adValue = pins.analogReadPin(AnalogPin.P1);
         adValue = adValue * 255 / 1023;
         return adValue;
@@ -1319,8 +1318,8 @@ namespace startbit {
     /**
     * Get the ad value of the photosensitive moudule
     */
-    //% weight=79 blockId=startbit_getphotosensitiveValue  block="Get Photosensitive|port %port|value(0~255)"
-    export function startbit_getphotosensitiveValue(port: startbit_photosensitivePort): number {
+    //% weight=79 blockId=paibot_getphotosensitiveValue  block="Get Photosensitive|port %port|value(0~255)"
+    export function paibot_getphotosensitiveValue(port: paibot_photosensitivePort): number {
         let adValue = pins.analogReadPin(AnalogPin.P1);
         adValue = adValue * 255 / 1023;
         return 255 - adValue;
@@ -1329,12 +1328,12 @@ namespace startbit {
     /**
     * Get the Photosensitive sensor status,1 detect bright,0 no detect bright
     */
-    //% weight=78 blockId=startbit_photosensitiveSensor blockGap=50 block="Photosensitive sensor|port %port|detect bright"
-    export function startbit_photosensitiveSensor(port: startbit_PhotosensitiveSensor): boolean {
+    //% weight=78 blockId=paibot_photosensitiveSensor blockGap=50 block="Photosensitive sensor|port %port|detect bright"
+    export function paibot_photosensitiveSensor(port: paibot_PhotosensitiveSensor): boolean {
         let status = 0;
         let flag: boolean = false;
         switch (port) {
-            case startbit_PhotosensitiveSensor.port1:
+            case paibot_PhotosensitiveSensor.port1:
                 pins.setPull(DigitalPin.P2, PinPullMode.PullUp);
                 status = pins.digitalReadPin(DigitalPin.P2);
                 break;
@@ -1349,28 +1348,28 @@ namespace startbit {
     /**
 	 * Initialize RGB
 	 */
-    function startbit_initRGBLight() {
+    function paibot_initRGBLight() {
         if (!lhRGBLight) {
-            lhRGBLight = StartbitRGBLight.create(DigitalPin.P15, 6, StartbitRGBPixelMode.RGB);
+            lhRGBLight = PaibotRGBLight.create(DigitalPin.P15, 6, PaibotRGBPixelMode.RGB);
         }
-        startbit_clearLight();
+        paibot_clearLight();
     }
 
     /**
          * Set the brightness of the strip. This flag only applies to future operation.
          * @param brightness a measure of LED brightness in 0-255. eg: 255
     */
-    //% blockId="startbit_setBrightness" block="set brightness %brightness"
+    //% blockId="paibot_setBrightness" block="set brightness %brightness"
     //% weight=68
-    export function startbit_setBrightness(brightness: number): void {
+    export function paibot_setBrightness(brightness: number): void {
         lhRGBLight.setBrightness(brightness);
     }
 
     /**
      * Set the color of the colored lights, after finished the setting please perform  the display of colored lights.
      */
-    //% weight=67 blockId=startbit_setPixelRGB block="Set|%lightoffset|color to %rgb"
-    export function startbit_setPixelRGB(lightoffset: StartbitLights, rgb: StartbitRGBColors) {
+    //% weight=67 blockId=paibot_setPixelRGB block="Set|%lightoffset|color to %rgb"
+    export function paibot_setPixelRGB(lightoffset: PaibotLights, rgb: PaibotRGBColors) {
         lhRGBLight.setPixelColor(lightoffset, rgb);
     }
 
@@ -1378,8 +1377,8 @@ namespace startbit {
     /**
      * Set RGB Color argument
      */
-    //% weight=66 blockId=startbit_setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
-    export function startbit_setPixelRGBArgs(lightoffset: StartbitLights, rgb: number) {
+    //% weight=66 blockId=paibot_setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
+    export function paibot_setPixelRGBArgs(lightoffset: PaibotLights, rgb: number) {
         lhRGBLight.setPixelColor(lightoffset, rgb);
     }
 
@@ -1387,61 +1386,61 @@ namespace startbit {
     /**
      * Display the colored lights, and set the color of the colored lights to match the use. After setting the color of the colored lights, the color of the lights must be displayed.
      */
-    //% weight=65 blockId=startbit_showLight block="Show light"
-    export function startbit_showLight() {
+    //% weight=65 blockId=paibot_showLight block="Show light"
+    export function paibot_showLight() {
         lhRGBLight.show();
     }
 
     /**
      * Clear the color of the colored lights and turn off the lights.
      */
-    //% weight=64 blockGap=50 blockId=startbit_clearLight block="Clear light"
-    export function startbit_clearLight() {
+    //% weight=64 blockGap=50 blockId=paibot_clearLight block="Clear light"
+    export function paibot_clearLight() {
         lhRGBLight.clear();
     }
 
     /**
 	 * Initialize Light belt
 	 */
-    //% weight=63 blockId=startbit_belt_initRGBLight block="Initialize light belt at port %port"
-    export function startbit_belt_initRGBLight(port: startbit_ultrasonicPort) {
+    //% weight=63 blockId=paibot_belt_initRGBLight block="Initialize light belt at port %port"
+    export function paibot_belt_initRGBLight(port: paibot_ultrasonicPort) {
         switch (port) {
-            case startbit_ultrasonicPort.port1:
+            case paibot_ultrasonicPort.port1:
                 if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = StartbitRGBLight.create(DigitalPin.P1, 30, StartbitRGBPixelMode.RGB);
+                    lhRGBLightBelt = PaibotRGBLight.create(DigitalPin.P1, 30, PaibotRGBPixelMode.RGB);
                 }
                 break;
-            case startbit_ultrasonicPort.port2:
+            case paibot_ultrasonicPort.port2:
                 if (!lhRGBLightBelt) {
-                    lhRGBLightBelt = StartbitRGBLight.create(DigitalPin.P13, 30, StartbitRGBPixelMode.RGB);
+                    lhRGBLightBelt = PaibotRGBLight.create(DigitalPin.P13, 30, PaibotRGBPixelMode.RGB);
                 }
                 break;
         }
 
-        startbit_clearLight();
+        paibot_clearLight();
     }
 
     /**
      * Set the color of the colored lights, after finished the setting please perform  the display of colored lights.
      */
-    //% weight=62 blockId=startbit_belt_setPixelRGB block="Set light belt|%lightoffset|color to %rgb"
-    export function startbit_belt_setPixelRGB(lightoffset: StartbitLightsBelt, rgb: StartbitRGBColors) {
+    //% weight=62 blockId=paibot_belt_setPixelRGB block="Set light belt|%lightoffset|color to %rgb"
+    export function paibot_belt_setPixelRGB(lightoffset: PaibotLightsBelt, rgb: PaibotRGBColors) {
         lhRGBLightBelt.setBeltPixelColor(lightoffset, rgb);
     }
 
     /**
      * Display the colored lights, and set the color of the colored lights to match the use. After setting the color of the colored lights, the color of the lights must be displayed.
      */
-    //% weight=61 blockId=startbit_belt_showLight block="Show light belt"
-    export function startbit_belt_showLight() {
+    //% weight=61 blockId=paibot_belt_showLight block="Show light belt"
+    export function paibot_belt_showLight() {
         lhRGBLightBelt.show();
     }
 
     /**
      * Clear the color of the colored lights and turn off the lights.
      */
-    //% weight=60 blockGap=50 blockId=startbit_belt_clearLight block="Clear light belt"
-    export function startbit_belt_clearLight() {
+    //% weight=60 blockGap=50 blockId=paibot_belt_clearLight block="Clear light belt"
+    export function paibot_belt_clearLight() {
         lhRGBLightBelt.clear();
     }
 
@@ -1452,38 +1451,38 @@ namespace startbit {
     /**
     * Resolve the Bluetooth that phone APP send command type, the total of nine types of commands: tank display command, servo debug command, obtaining the distance of ultrasonic command, obtaining temperature command, obtain sound size rank orders, to obtain the light level command, set the color lights command, honking command, firmware version information command.
     */
-    //% weight=59 blockId=startbit_analyzeBluetoothCmd block="Get bluetooth command type %str"
-    export function startbit_analyzeBluetoothCmd(str: string): number {
+    //% weight=59 blockId=paibot_analyzeBluetoothCmd block="Get bluetooth command type %str"
+    export function paibot_analyzeBluetoothCmd(str: string): number {
         if (str.length > 6) {
             let cmdHead = str.substr(0, 3);
 
             if (cmdHead == "CMD") {
                 let cmdTypeStr: string = str.substr(4, 2);
                 let cmdType = strToNumber(cmdTypeStr);
-                if (cmdType > startbit_CmdType.GET_HAND_CMD || cmdType < 0) {
-                    return startbit_CmdType.NO_COMMAND;
+                if (cmdType > paibot_CmdType.GET_HAND_CMD || cmdType < 0) {
+                    return paibot_CmdType.NO_COMMAND;
                 }
                 else {
                     return cmdType;
                 }
             }
             else {
-                return startbit_CmdType.NO_COMMAND;
+                return paibot_CmdType.NO_COMMAND;
             }
         }
         else {
-            return startbit_CmdType.NO_COMMAND;
+            return paibot_CmdType.NO_COMMAND;
         }
     }
     /**
      * Resolve the parameters that the phone APP send the command,there are 3 parameters of servo debug command,the other command has just one parameter.
      */
-    //% weight=58  blockId=startbit_cgetArgs block="Get bluetooth command|%str|argument at %index"
+    //% weight=58  blockId=paibot_cgetArgs block="Get bluetooth command|%str|argument at %index"
     //% index.min=1 index.max=3
-    export function startbit_getArgs(str: string, index: number): number {
-        let cmdType = startbit_analyzeBluetoothCmd(str);
-        if (cmdType == startbit_CmdType.NO_COMMAND) {
-            return startbit_CarRunCmdType.COMMAND_ERRO;
+    export function paibot_getArgs(str: string, index: number): number {
+        let cmdType = paibot_analyzeBluetoothCmd(str);
+        if (cmdType == paibot_CmdType.NO_COMMAND) {
+            return paibot_CarRunCmdType.COMMAND_ERRO;
         }
         else {
             let dataIndex = 7;
@@ -1496,9 +1495,9 @@ namespace startbit {
                 dataIndex = 13;
                 subLegth = 4;
             }
-            if (cmdType == startbit_CmdType.SERVO) {
+            if (cmdType == paibot_CmdType.SERVO) {
                 if (str.length < 17) {
-                    return startbit_CmdType.NO_COMMAND;
+                    return paibot_CmdType.NO_COMMAND;
                 }
             }
             if ((index == 1 && str.length < 10) || (index == 2 && str.length < 13) || (index == 3 && str.length < 17)) {
@@ -1515,24 +1514,24 @@ namespace startbit {
     /**
      * Returns the enumeration of the command type, which can be compared with this module after obtaining the bluetooth command type sent by the mobile phone APP.
      */
-    //% weight=57 blockId=startbit_getBluetoothCmdtype block="Bluetooth command type %type"
-    export function startbit_getBluetoothCmdtype(type: startbit_CmdType): number {
+    //% weight=57 blockId=paibot_getBluetoothCmdtype block="Bluetooth command type %type"
+    export function paibot_getBluetoothCmdtype(type: paibot_CmdType): number {
         return type;
     }
 
     /**
      * The command type of the tank is stop, go ahead, back, turn left, turn right, slow down, turn left slowly, turn right slowly.
      */
-    //% weight=56 blockId=startbit_getRunCarType block="Car run type %type"
-    export function startbit_getRunCarType(type: startbit_CarRunCmdType): number {
+    //% weight=56 blockId=paibot_getRunCarType block="Car run type %type"
+    export function paibot_getRunCarType(type: paibot_CarRunCmdType): number {
         return type;
     }
 
     /**
      * The distance from the ultrasonic obstacle is the standard command, which is sent to the mobile phone. The APP will indicate the distance of the ultrasonic obstacle.
      */
-    //% weight=55 blockId=startbit_convertUltrasonic block="Convert ultrasonic distance %data"
-    export function startbit_convertUltrasonic(data: number): string {
+    //% weight=55 blockId=paibot_convertUltrasonic block="Convert ultrasonic distance %data"
+    export function paibot_convertUltrasonic(data: number): string {
         let cmdStr: string = "CMD|03|";
         cmdStr += data.toString();
         cmdStr += "|$";
@@ -1542,8 +1541,8 @@ namespace startbit {
     /**
      * The conversion temperature value to standard command, sent to the mobile phone, and the APP displays the current temperature.
      */
-    //% weight=54 blockId=startbit_convertTemperature block="Convert temperature %data"
-    export function startbit_convertTemperature(data: number): string {
+    //% weight=54 blockId=paibot_convertTemperature block="Convert temperature %data"
+    export function paibot_convertTemperature(data: number): string {
         let cmdStr: string = "CMD|04|";
         cmdStr += data.toString();
         cmdStr += "|$";
@@ -1553,8 +1552,8 @@ namespace startbit {
     /**
      * Convert the light value to the standard command and send it to the mobile phone. The APP displays the current light level (0~255).
      */
-    //% weight=53 blockId=startbit_convertLight block="Convert light %data"
-    export function startbit_convertLight(data: number): string {
+    //% weight=53 blockId=paibot_convertLight block="Convert light %data"
+    export function paibot_convertLight(data: number): string {
         let cmdStr: string = "CMD|06|";
         cmdStr += data.toString();
         cmdStr += "|$";
@@ -1564,8 +1563,8 @@ namespace startbit {
     /**
      * Convert the battery value to the standard command and send it to the mobile phone. The APP displays the current voltage.
      */
-    //% weight=52 blockId=startbit_convertBattery blockGap=50 block="Convert battery %data"
-    export function startbit_convertBattery(data: number): string {
+    //% weight=52 blockId=paibot_convertBattery blockGap=50 block="Convert battery %data"
+    export function paibot_convertBattery(data: number): string {
         let cmdStr: string = "CMD|07|";
         cmdStr += data.toString();
         cmdStr += "|$";
@@ -1575,8 +1574,8 @@ namespace startbit {
     /**
      * Convert the hand cmd to phone app
      */
-    //% weight=51 blockId=startbit_convertHandCmd blockGap=50 block="Convert uHand:bit %data"
-    export function startbit_convertHandCmd(data: number): string {
+    //% weight=51 blockId=paibot_convertHandCmd blockGap=50 block="Convert uHand:bit %data"
+    export function paibot_convertHandCmd(data: number): string {
         let cmdStr: string = "CMD|15|";
         cmdStr += data.toString();
         cmdStr += "|$";
@@ -1586,8 +1585,8 @@ namespace startbit {
     /**
      * Connect to the wifi
      */
-    //% weight=50 blockId=startbit_connectWifi block="Connect to the Wifi,name|%ssid|and password %passwrd"
-    export function startbit_connectWifi(ssid: string, passwrd: string) {
+    //% weight=50 blockId=paibot_connectWifi block="Connect to the Wifi,name|%ssid|and password %passwrd"
+    export function paibot_connectWifi(ssid: string, passwrd: string) {
         let buf = pins.createBuffer(ssid.length + passwrd.length + 10);
         buf[0] = 0x55;
         buf[1] = 0x55;
@@ -1611,16 +1610,16 @@ namespace startbit {
     /**
      * Detect the device connect status
      */
-    //% weight=49 blockId=startbit_isConnectedServer block="Device is connected to server?"
-    export function startbit_isConnectedServer(): boolean {
+    //% weight=49 blockId=paibot_isConnectedServer block="Device is connected to server?"
+    export function paibot_isConnectedServer(): boolean {
         return connectStatus;
     }
 
     /**
      * Send get mac address command
      */
-    //% weight=48 blockId=startbit_send_getMac block="Send pair command"
-    export function startbit_send_getMac() {
+    //% weight=48 blockId=paibot_send_getMac block="Send pair command"
+    export function paibot_send_getMac() {
         let buf = pins.createBuffer(5);
         buf[0] = 0x55;
         buf[1] = 0x55;
@@ -1631,19 +1630,19 @@ namespace startbit {
     }
 
     /**
-     * Do someting when Startbit receive mac adress
+     * Do someting when Paibot receive mac adress
      * @param body code to run when event is raised
      */
-    //% weight=47 blockId=onStartbit_getMac block="on startbit get device id"
-    export function onStartbit_getMac(body: Action) {
+    //% weight=47 blockId=onPaibot_getMac block="on paibot get device id"
+    export function onPaibot_getMac(body: Action) {
         control.onEvent(MESSAGE_MAC, 1, body);
     }
 
     /**
      * Get device mac address
      */
-    //% weight=46 blockId=startbit_getMacAddress block="Get device id"
-    export function startbit_getMacAddress(): string {
+    //% weight=46 blockId=paibot_getMacAddress block="Get device id"
+    export function paibot_getMacAddress(): string {
         return macStr + "$";
     }
 }
