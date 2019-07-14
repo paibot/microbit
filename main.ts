@@ -60,7 +60,9 @@ namespace paibot {
 
     export enum paibot_lineFollowPort {
         //% block="Port 1"
-        port1 = 0x01
+        port1 = 0x01,
+        //% block="Port 4"
+        port4 = 0x04
     }
 
 
@@ -1211,6 +1213,22 @@ namespace paibot {
                 else
                     s2 = 1;
                 break;
+            case paibot_lineFollowPort.port4:
+            	led.enable(false);
+                s1 = pins.analogReadPin(AnalogPin.P3);
+                s2 = pins.analogReadPin(AnalogPin.P4);
+                led.enable(true);
+                s1 = s1 * 255 / 1023;
+                s2 = s2 * 255 / 1023;
+                if (s1 < 100)
+                    s1 = 0;
+                else
+                    s1 = 1;
+                if (s2 < 100)
+                    s2 = 0;
+                else
+                    s2 = 1;
+                break;                
         }
         let s = ((1 & s1) << 1) | s2;
         if (s == status) {
@@ -1235,6 +1253,14 @@ namespace paibot {
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;
+            case paibot_lineFollowPort.port4:
+            	led.enable(false);
+                s1 = pins.analogReadPin(AnalogPin.P3);
+                s2 = pins.analogReadPin(AnalogPin.P4);
+                led.enable(true);
+                s1 = s1 * 255 / 1023;
+                s2 = s2 * 255 / 1023;
+                break;                
         }
         if (sensor == paibot_LineFollowerSensor.LFSensor_1) {
             return 255 - s1;
