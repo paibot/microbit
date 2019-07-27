@@ -89,15 +89,15 @@ namespace paibot {
         //% block="Port 1"
         port1 = 0x01
     }
-	
+
     export enum paibot_photosensitivePort {
         //% block="Port 1"
-        port1 = 0x01	    
+        port1 = 0x01
     }
-	
+
     export enum paibot_PhotosensitiveSensor {
         //% block="Port 1"
-        port1 = 0x00	    
+        port1 = 0x00
     }
 
     export enum paibot_fanPort {
@@ -111,23 +111,23 @@ namespace paibot {
         //% block="180"
         range1 = 180,
         //% block="270"
-        range2 =270
+        range2 = 270
     }
-	
+
     export enum paibot_digitaltubePort {
         //% block="Port 1"
         port1 = 0x01,
         //% block="Port 2"
         port2 = 0x02
     }
-	
+
     export enum paibot_CmdType {
         //% block="Invalid command"
         NO_COMMAND = 0,
         //% block="car run"
         CAR_RUN = 1,
-	//% block="robot run"   
-	ROBOT_RUN = 1,
+        //% block="robot run"   
+        ROBOT_RUN = 1,
         //% block="Servo"
         SERVO = 2,
         //% block="Ultrasonic distance"
@@ -156,7 +156,7 @@ namespace paibot {
         GET_MAC = 14,
         //% block="Get hand cmd"
         GET_HAND_CMD = 15
-     }
+    }
 
     export enum paibot_CarRunCmdType {
         //% block="Stop"
@@ -217,13 +217,13 @@ namespace paibot {
 
     let macStr: string = "";
     let actiongroup_finished = true;
-    
-    let Digitaltube:paibot_TM1640LEDs
+
+    let Digitaltube: paibot_TM1640LEDs
     let TM1640_CMD1 = 0x40;
     let TM1640_CMD2 = 0xC0;
     let TM1640_CMD3 = 0x80;
     let _SEGMENTS = [0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71];
-	
+
     /**
     * Get the handle command.
     */
@@ -396,8 +396,8 @@ namespace paibot {
     //% weight=99 blockId=setServo block="Set pwm servo range|range %range|index %index|angle %angle|duration %duration"
     //% angle.min=0 angle.max=270
     //% inlineInputMode=inline
-    export function setServo(range:paibot_servorange, index: number = 1, angle: number, duration: number = 300) {
-	    
+    export function setServo(range: paibot_servorange, index: number = 1, angle: number, duration: number = 300) {
+
         let position = mapRGB(angle, 0, range, 500, 2500);
 
         let buf = pins.createBuffer(10);
@@ -414,7 +414,7 @@ namespace paibot {
         serial.writeBuffer(buf);
     }
 
-	
+
     /**
     * Set the servo controller to run a actiongroup
     * @param times Running times. eg: 1
@@ -434,7 +434,7 @@ namespace paibot {
         actiongroup_finished = false;
         serial.writeBuffer(buf);
     }
-	
+
     /**
     * Stop running actiongroup
     */
@@ -446,11 +446,11 @@ namespace paibot {
         buf[1] = 0x55;
         buf[2] = 0x02;
         buf[3] = 0x07;//cmd type CMD_ACTION_GROUP_STOP
-	    
-	actiongroup_finished = false;
+
+        actiongroup_finished = false;
         serial.writeBuffer(buf);
     }
-	
+
     /**
      * Wait for Actiongroup Finishing
      */
@@ -467,7 +467,7 @@ namespace paibot {
         return actiongroup_finished;
     }
 
-	
+
     /**
      * Send read paibot servos angle command
      */
@@ -508,33 +508,33 @@ namespace paibot {
         else
             return 0xFFF;
     }
-    
+
     /**
      *  Send robot attitude to the servo controller
      *  @param pitch eg: 0
      *  @param roll eg: 0
      */
     //% weight=91 blockId=paibot_sendAttitude block="Send pitch|%pitch|and roll|%roll"
-   /*
-    export function paibot_sendAttitude(pitch: number, roll: number) {
-        pitch < -90 ? -90 : pitch;
-        pitch > 90 ? 90 : pitch;
-        roll < -90 ? -90 : roll;
-        roll > 90 ? 90 : roll;
+    /*
+     export function paibot_sendAttitude(pitch: number, roll: number) {
+         pitch < -90 ? -90 : pitch;
+         pitch > 90 ? 90 : pitch;
+         roll < -90 ? -90 : roll;
+         roll > 90 ? 90 : roll;
+ 
+         let buf = pins.createBuffer(6);
+         buf[0] = 0x55;
+         buf[1] = 0x55;
+         buf[2] = 0x04;
+         buf[3] = 0x5A;
+         buf[4] = pitch;
+         buf[5] = roll;
+         serial.writeBuffer(buf);
+     }
+     */
 
-        let buf = pins.createBuffer(6);
-        buf[0] = 0x55;
-        buf[1] = 0x55;
-        buf[2] = 0x04;
-        buf[3] = 0x5A;
-        buf[4] = pitch;
-        buf[5] = roll;
-        serial.writeBuffer(buf);
-    }
-    */
-	
     /**
-    *	Set the speed of the number 1 motor and number 2 motor, range of -100~100, that can control the tank to go advance or turn of.
+    *   Set the speed of the number 1 motor and number 2 motor, range of -100~100, that can control the tank to go advance or turn of.
     */
     //% weight=86 blockId=paibot_setMotorSpeed  block="Set motor1 speed(-100~100)|%speed1|and motor2|speed %speed2"
     //% speed1.min=-100 speed1.max=100
@@ -556,7 +556,7 @@ namespace paibot {
     }
 
     /**
-    *	Set the speed of the fan, range of -100~100.
+    *   Set the speed of the fan, range of -100~100.
     */
     //% weight=84 blockId=paibot_setFanSpeed  block="Set |%port fan speed(-100~100)|%speed1"
     //% speed1.min=-100 speed1.max=100
@@ -601,7 +601,7 @@ namespace paibot {
     export function paibot_getBatVoltage(): number {
         return currentVoltage;
     }
-	
+
     /**
         * TM1640 LED display
         */
@@ -780,12 +780,12 @@ namespace paibot {
         return digitaltube;
     }
 
-  /**
-     * @param clk the CLK pin for TM1640, eg: DigitalPin.P1
-     * @param dio the DIO pin for TM1640, eg: DigitalPin.P2
-     * @param intensity the brightness of the LED, eg: 7
-     * @param count the count of the LED, eg: 4
-     */
+    /**
+       * @param clk the CLK pin for TM1640, eg: DigitalPin.P1
+       * @param dio the DIO pin for TM1640, eg: DigitalPin.P2
+       * @param intensity the brightness of the LED, eg: 7
+       * @param count the count of the LED, eg: 4
+       */
     //% weight=77 blockId=paibot_digitaltube block="digitaltube|%port|intensity %intensity|LED count %count"
     export function paibot_digitaltube(port: paibot_digitaltubePort, intensity: number, count: number) {
         Digitaltube = paibot_TM1640create(port, intensity, count);
@@ -796,7 +796,7 @@ namespace paibot {
      * @param num is a number, eg: 0
      */
     //% weight=76 blockId=paibot_showNumber block="digitaltube show number| %num"
-    export function paibot_showNumber(num: number)  {
+    export function paibot_showNumber(num: number) {
         Digitaltube.showNumber(num);
     }
 
@@ -827,7 +827,7 @@ namespace paibot {
     //% weight=73 blockId=paibot_showDP block="digitaltube DotPoint at| %bit|show %show"
     export function paibot_showDP(bit: number = 1, show: boolean = true) {
         Digitaltube.showDP(bit, show);
-    } 
+    }
 
     /**
      * set TM1640 intensity, range is [0-8], 0 is off.
@@ -836,7 +836,7 @@ namespace paibot {
     //% weight=72 blockId=paibot_intensity block=" digitaltube set intensity %val"
     export function paibot_intensity(val: number = 7) {
         Digitaltube.intensity(val);
-    } 
+    }
 
     /**
      * turn off LED. 
@@ -860,7 +860,7 @@ namespace paibot {
     //%weight=69 blockId=paibot_clear blockGap=50 block="clear digitaltube"
     export function paibot_clear() {
         Digitaltube.clear();
-    }  
+    }
 
     const APDS9960_I2C_ADDR = 0x39;
     const APDS9960_ID_1 = 0xA8;
@@ -1103,8 +1103,8 @@ namespace paibot {
     }
 
     /**
-	 *  Color sensor return the color.
-	 */
+     *  Color sensor return the color.
+     */
     //% weight=86 blockId=paibot_checkCurrentColor block="Current color %color"
     export function paibot_checkCurrentColor(color: paibot_Colors): boolean {
         let c = i2cread(APDS9960_CDATAL) + i2cread(APDS9960_CDATAH) * 256;
@@ -1137,7 +1137,7 @@ namespace paibot {
         // serial.writeLine("->ggreen");
         // serial.writeNumber(b);
         // serial.writeLine("->bblue");
-         let hsv = rgb2hue(r, g, b);
+        let hsv = rgb2hue(r, g, b);
         // serial.writeNumber(hsv);
         // serial.writeLine("->hsv");
         let t = paibot_Colors.None;
@@ -1204,32 +1204,26 @@ namespace paibot {
                 s2 = pins.analogReadPin(AnalogPin.P2);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
-                if (s1 < 100)
-                    s1 = 0;
-                else
-                    s1 = 1;
-                if (s2 < 100)
-                    s2 = 0;
-                else
-                    s2 = 1;
                 break;
             case paibot_lineFollowPort.port4:
-            	led.enable(false);
+                led.enable(false);
                 s1 = pins.analogReadPin(AnalogPin.P3);
                 s2 = pins.analogReadPin(AnalogPin.P4);
                 led.enable(true);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
-                if (s1 < 100)
-                    s1 = 0;
-                else
-                    s1 = 1;
-                if (s2 < 100)
-                    s2 = 0;
-                else
-                    s2 = 1;
                 break;                
         }
+
+        if (s1 < 100)
+            s1 = 0;
+        else
+            s1 = 1;
+        if (s2 < 100)
+            s2 = 0;
+        else
+            s2 = 1;
+        
         let s = ((1 & s1) << 1) | s2;
         if (s == status) {
             return true;
@@ -1242,8 +1236,8 @@ namespace paibot {
     /**
      * Get the line follower sensor port ad value
      */
-    //% weight=83 blockId=paibot_lineSensorValue block="Get line follower sensor|port %port|%sensor|ad value"
-    export function paibot_lineSensorValue(port: paibot_lineFollowPort, sensor: paibot_LineFollowerSensor): number {
+    //% weight=83 blockId=paibot_readLineFollowerValue block="Get line follower value|port %port|value"
+    export function paibot_readLineFollowerValue(port: paibot_lineFollowPort): number {
         let s1 = 0;
         let s2 = 0;
         switch (port) {
@@ -1254,7 +1248,7 @@ namespace paibot {
                 s2 = s2 * 255 / 1023;
                 break;
             case paibot_lineFollowPort.port4:
-            	led.enable(false);
+                led.enable(false);
                 s1 = pins.analogReadPin(AnalogPin.P3);
                 s2 = pins.analogReadPin(AnalogPin.P4);
                 led.enable(true);
@@ -1262,13 +1256,16 @@ namespace paibot {
                 s2 = s2 * 255 / 1023;
                 break;                
         }
-        if (sensor == paibot_LineFollowerSensor.LFSensor_1) {
-            return 255 - s1;
-        }
-        else {
-            return 255 - s2;
-        }
-
+        if (s1 < 100)
+            s1 = 0;
+        else
+            s1 = 1;
+        if (s2 < 100)
+            s2 = 0;
+        else
+            s2 = 1;
+        
+        return ((1 & s1) << 1) | s2;
     }
     /**
     * Get the condition of the touch button,press return 1,or return 0
@@ -1341,7 +1338,7 @@ namespace paibot {
         adValue = adValue * 255 / 1023;
         return adValue;
     }
-	
+
     /**
     * Get the ad value of the photosensitive moudule
     */
@@ -1371,10 +1368,10 @@ namespace paibot {
             flag = true;
         return flag;
     }
-	
+
     /**
-	 * Initialize RGB
-	 */
+     * Initialize RGB
+     */
     function paibot_initRGBLight() {
         if (!lhRGBLight) {
             lhRGBLight = PaibotRGBLight.create(DigitalPin.P15, 6, PaibotRGBPixelMode.RGB);
@@ -1427,8 +1424,8 @@ namespace paibot {
     }
 
     /**
-	 * Initialize Light belt
-	 */
+     * Initialize Light belt
+     */
     //% weight=63 blockId=paibot_belt_initRGBLight block="Initialize light belt at port %port"
     export function paibot_belt_initRGBLight(port: paibot_ultrasonicPort) {
         switch (port) {
