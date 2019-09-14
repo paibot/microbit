@@ -422,7 +422,7 @@ namespace motion {
      * Read rotation
      */
     //%
-    float rotation(int axis)
+    int rotation(int axis)
     {
         unsigned char intr;
         unsigned int fifocnt;
@@ -464,6 +464,6 @@ namespace motion {
 
         }while(1);
 
-        return dmp_rotation[axis];
+        return (int)dmp_rotation[axis];
     }
 }
