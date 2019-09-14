@@ -202,7 +202,6 @@ namespace paibot {
             SerialPin.P12,
             SerialPin.P8,
             BaudRate.BaudRate115200);
-        motion.init();
         basic.forever(() => {
             getHandleCmd();
         });
@@ -1281,6 +1280,15 @@ namespace paibot {
         return ((1 & s1) << 1) | s2;
     }
 
+
+    /**
+     * Paibot Motion initialization
+    */
+    //% weight=31 blockId=paibot_motionInit block="Initialize Motion sensor"
+    export function paibot_motionInit() {
+        motion.init();
+    }
+    
     /**
      * Get the motion sensor value
      */

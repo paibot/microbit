@@ -99,6 +99,7 @@
 	"paibot.paibot_fan_speed|block":"设置风扇|%port|速度 %speed",
 	"paibot.paibot_readLineFollowerStatus|block":"巡线传感器|%port|%status",
 	"paibot.paibot_readLineFollowerValue|block":"巡线传感器|%port|的值",
+	"paibot.paibot_motionInit|block": "初始化移动传感器",
 	"paibot.paibot_readMotionSensorValue|block":"动作传感器|%type|%axis|的值",
 	"paibot.paibot_ultrasonic|block":"超声波模块|%port|测试到障碍物距离(Cm)",
 	"paibot.paibot_knobPort.port1|block":"接口1",
