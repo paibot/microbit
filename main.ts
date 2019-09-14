@@ -65,6 +65,19 @@ namespace paibot {
         port4 = 0x04
     }
 
+    export enum paibot_motionSensorType {
+        //% block="Rotation"
+        motion_rotation = 0x01,
+    }
+
+    export enum paibot_motionSensorAxis {
+        //% block="X axis"
+        axis_x = 0x00,
+        //% block="Y axis"
+        axis_y = 0x01,
+        //% block="Z axis"
+        axis_z = 0x02,
+    }
 
     export enum paibot_PinIOStatus {
         //% block="Low"
@@ -189,7 +202,7 @@ namespace paibot {
             SerialPin.P12,
             SerialPin.P8,
             BaudRate.BaudRate115200);
-
+        motion.init();
         basic.forever(() => {
             getHandleCmd();
         });
@@ -1194,26 +1207,26 @@ namespace paibot {
     /**
     * Get the condition of the line follower sensor
     */
-    //% weight=84 blockId=paibot_readLineFollowerStatus block="Line follower status|port %port|%status"
+    //% weight=84 blockId=paibot_readLineFollowerStatus block="Line follower status|%port|%status"
     export function paibot_readLineFollowerStatus(port: paibot_lineFollowPort, status: paibot_lineFollower): boolean {
         let s1 = 0;
         let s2 = 0;
+        led.enable(false);
         switch (port) {
             case paibot_lineFollowPort.port1:
-                s1 = pins.analogReadPin(AnalogPin.P1);
-                s2 = pins.analogReadPin(AnalogPin.P2);
+                s1 = pins.analogReadPin(AnalogPin.P2);
+                s2 = pins.analogReadPin(AnalogPin.P4);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;
             case paibot_lineFollowPort.port4:
-                led.enable(false);
-                s1 = pins.analogReadPin(AnalogPin.P3);
-                s2 = pins.analogReadPin(AnalogPin.P4);
-                led.enable(true);
+                s1 = pins.analogReadPin(AnalogPin.P1);
+                s2 = pins.analogReadPin(AnalogPin.P3);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;                
         }
+        led.enable(true);
 
         if (s1 < 100)
             s1 = 0;
@@ -1236,26 +1249,26 @@ namespace paibot {
     /**
      * Get the line follower sensor port ad value
      */
-    //% weight=83 blockId=paibot_readLineFollowerValue block="Get line follower value|port %port|value"
+    //% weight=83 blockId=paibot_readLineFollowerValue block="Get line follower |%port|value"
     export function paibot_readLineFollowerValue(port: paibot_lineFollowPort): number {
         let s1 = 0;
         let s2 = 0;
+        led.enable(false);
         switch (port) {
             case paibot_lineFollowPort.port1:
-                s1 = pins.analogReadPin(AnalogPin.P1);
-                s2 = pins.analogReadPin(AnalogPin.P2);
+                s1 = pins.analogReadPin(AnalogPin.P2);
+                s2 = pins.analogReadPin(AnalogPin.P4);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;
             case paibot_lineFollowPort.port4:
-                led.enable(false);
-                s1 = pins.analogReadPin(AnalogPin.P3);
-                s2 = pins.analogReadPin(AnalogPin.P4);
-                led.enable(true);
+                s1 = pins.analogReadPin(AnalogPin.P1);
+                s2 = pins.analogReadPin(AnalogPin.P3);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;                
         }
+        led.enable(true);
         if (s1 < 100)
             s1 = 0;
         else
@@ -1267,6 +1280,15 @@ namespace paibot {
         
         return ((1 & s1) << 1) | s2;
     }
+
+    /**
+     * Get the motion sensor value
+     */
+    //% weight=30 blockId=paibot_readMotionSensorValue block="Get motion sensor|%type|%axis|value"
+    export function paibot_readMotionSensorValue(type: paibot_motionSensorType, axis: paibot_motionSensorAxis): number {
+        return motion.rotation(axis);
+    }
+    
     /**
     * Get the condition of the touch button,press return 1,or return 0
     */

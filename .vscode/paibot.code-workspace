@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "E:\\work\\paibot\\microbit"
+		},
+		{
+			"path": "D:\\Program Files (x86)\\Makecode\\resources\\app\\libs"
+		}
+	],
+	"settings": {
+		"files.autoSave": "afterDelay"
+	}
+}

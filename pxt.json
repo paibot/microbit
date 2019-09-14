@@ -10,7 +10,11 @@
         "README.md",
         "main.ts",
         "PaibotRGBLight.ts",
+        "motion.ts",
+        "motion.cpp",
         "sendbuffer.asm",
+        "shims.d.ts",
+        "enums.d.ts",
         "_locales/zh/paibot-strings.json",
         "_locales/zh/paibot-jsdoc-strings.json"
     ],

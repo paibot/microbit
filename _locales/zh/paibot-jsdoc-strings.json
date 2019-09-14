@@ -30,6 +30,7 @@
 	"paibot.paibot_fan_speed":"控制风扇旋转",
 	"paibot.paibot_readLineFollowerStatus":"获得巡线传感器状态",
 	"paibot.paibot_readLineFollowerValue":"获得巡线传感器值",
+	"paibot.paibot_readMotionSensorValue":"获得动作传感器值",
 	"paibot.paibot_touchButton":"检测触摸按键是否有按下，有按下返回1，没有按下返回0",
 	"paibot.paibot_ultrasonic":"获得超声波模块测试到的障碍物的距离",
 	"paibot.paibot_getKnobValue":"获取旋钮的ad值",
