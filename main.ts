@@ -1213,14 +1213,14 @@ namespace paibot {
         led.enable(false);
         switch (port) {
             case paibot_lineFollowPort.port1:
-                s1 = pins.analogReadPin(AnalogPin.P2);
-                s2 = pins.analogReadPin(AnalogPin.P4);
+                s1 = pins.analogReadPin(AnalogPin.P4);
+                s2 = pins.analogReadPin(AnalogPin.P2);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;
             case paibot_lineFollowPort.port4:
-                s1 = pins.analogReadPin(AnalogPin.P1);
-                s2 = pins.analogReadPin(AnalogPin.P3);
+                s1 = pins.analogReadPin(AnalogPin.P3);
+                s2 = pins.analogReadPin(AnalogPin.P1);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;                
@@ -1255,14 +1255,14 @@ namespace paibot {
         led.enable(false);
         switch (port) {
             case paibot_lineFollowPort.port1:
-                s1 = pins.analogReadPin(AnalogPin.P2);
-                s2 = pins.analogReadPin(AnalogPin.P4);
+                s1 = pins.analogReadPin(AnalogPin.P4);
+                s2 = pins.analogReadPin(AnalogPin.P2);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;
             case paibot_lineFollowPort.port4:
-                s1 = pins.analogReadPin(AnalogPin.P1);
-                s2 = pins.analogReadPin(AnalogPin.P3);
+                s1 = pins.analogReadPin(AnalogPin.P3);
+                s2 = pins.analogReadPin(AnalogPin.P1);
                 s1 = s1 * 255 / 1023;
                 s2 = s2 * 255 / 1023;
                 break;                
