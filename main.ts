@@ -1317,13 +1317,19 @@ namespace paibot {
                 adv = pins.analogReadPin(AnalogPin.P0);
                 break;   
             case paibot_adChannelType.adch_5:
+                led.enable(false);
                 adv = pins.analogReadPin(AnalogPin.P3);
+                led.enable(true);
                 break;   
             case paibot_adChannelType.adch_6:
+                led.enable(false);
                 adv = pins.analogReadPin(AnalogPin.P4);
+                led.enable(true);
                 break;   
             case paibot_adChannelType.adch_7:
+                led.enable(false);
                 adv = pins.analogReadPin(AnalogPin.P10);
+                led.enable(true);
                 break;                   
         }
     }
