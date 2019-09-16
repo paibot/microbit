@@ -1332,6 +1332,7 @@ namespace paibot {
                 led.enable(true);
                 break;                   
         }
+        return adv;
     }
 
     /**
