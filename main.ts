@@ -87,13 +87,13 @@ namespace paibot {
         //% block="Channel 3"
         adch_3 = 0x03,
         //% block="Channel 4"
-        adch_4 = 0x03,
+        adch_4 = 0x04,
         //% block="Channel 5"
-        adch_5 = 0x03,
+        adch_5 = 0x05,
         //% block="Channel 6"
-        adch_6 = 0x03,
+        adch_6 = 0x06,
         //% block="Channel 7"
-        adch_7 = 0x03,        
+        adch_7 = 0x07,        
     }
     
     export enum paibot_PinIOStatus {
