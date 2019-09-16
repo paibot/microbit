@@ -30,6 +30,7 @@
 	"paibot.paibot_fan_speed":"控制风扇旋转",
 	"paibot.paibot_readLineFollowerStatus":"获得巡线传感器状态",
 	"paibot.paibot_readLineFollowerValue":"获得巡线传感器值",
+	"paibot.paibot_readAdValue":"获得AD值",
 	"paibot.paibot_motionInit":"移动传感器初始化",
 	"paibot.paibot_readMotionSensorValue":"获得动作传感器值",
 	"paibot.paibot_touchButton":"检测触摸按键是否有按下，有按下返回1，没有按下返回0",

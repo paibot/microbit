@@ -79,6 +79,23 @@ namespace paibot {
         axis_z = 0x02,
     }
 
+    export enum paibot_adChannelType {
+        //% block="Channel 0"
+        adch_0 = 0x00,    
+        //% block="Channel 2"
+        adch_2 = 0x02,
+        //% block="Channel 3"
+        adch_3 = 0x03,
+        //% block="Channel 4"
+        adch_4 = 0x03,
+        //% block="Channel 5"
+        adch_5 = 0x03,
+        //% block="Channel 6"
+        adch_6 = 0x03,
+        //% block="Channel 7"
+        adch_7 = 0x03,        
+    }
+    
     export enum paibot_PinIOStatus {
         //% block="Low"
         Low = 0x00,
@@ -1248,8 +1265,8 @@ namespace paibot {
     /**
      * Get the line follower sensor port ad value
      */
-    //% weight=83 blockId=paibot_readLineFollowerValue block="Get line follower |%port|value"
-    export function paibot_readLineFollowerValue(port: paibot_lineFollowPort): number {
+    //% weight=83 blockId=paibot_readLineFollowerValue block="Get line follower |%port|%thod|value"
+    export function paibot_readLineFollowerValue(port: paibot_lineFollowPort, thod: number): number {
         let s1 = 0;
         let s2 = 0;
         led.enable(false);
@@ -1268,18 +1285,48 @@ namespace paibot {
                 break;                
         }
         led.enable(true);
-        if (s1 < 100)
+        if (s1 < thod)
             s1 = 0;
         else
             s1 = 1;
-        if (s2 < 100)
+        if (s2 < thod)
             s2 = 0;
         else
             s2 = 1;
         
         return ((1 & s1) << 1) | s2;
     }
-
+    
+    /**
+     * Read AD value
+     */
+    //% weight=32 blockId=paibot_readAdValue block="Read AD value|%channel|value"
+    export function paibot_readAdValue(type: paibot_adChannelType): number {
+        let adv = 0;
+        switch (type) {
+            case paibot_adChannelType.adch_0:
+                adv = pins.analogReadPin(AnalogPin.P11);
+                break;        
+            case paibot_adChannelType.adch_2:
+                adv = pins.analogReadPin(AnalogPin.P2);
+                break;
+            case paibot_adChannelType.adch_3:
+                adv = pins.analogReadPin(AnalogPin.P1);
+                break;  
+            case paibot_adChannelType.adch_4:
+                adv = pins.analogReadPin(AnalogPin.P0);
+                break;   
+            case paibot_adChannelType.adch_5:
+                adv = pins.analogReadPin(AnalogPin.P3);
+                break;   
+            case paibot_adChannelType.adch_6:
+                adv = pins.analogReadPin(AnalogPin.P4);
+                break;   
+            case paibot_adChannelType.adch_7:
+                adv = pins.analogReadPin(AnalogPin.P10);
+                break;                   
+        }
+    }
 
     /**
      * Paibot Motion initialization
