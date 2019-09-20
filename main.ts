@@ -1206,10 +1206,8 @@ namespace paibot {
                 status = pins.digitalReadPin(DigitalPin.P13);
                 break;
             case paibot_touchKeyPort.port3:
-                if (P14_ad > 0xA)
-                    status = 1
-                else
-                    status = 0;
+                pins.setPull(DigitalPin.P14, PinPullMode.PullUp);
+                status = pins.digitalReadPin(DigitalPin.P14);
                 break;
         }
         if (status == 1)
