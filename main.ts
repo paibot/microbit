@@ -582,7 +582,6 @@ namespace paibot {
         buf[4] = speed1;
         buf[5] = speed2;
         serial.writeBuffer(buf);
-        serial.writeBuffer(buf);
     }
 
     /**
