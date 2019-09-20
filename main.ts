@@ -61,6 +61,8 @@ namespace paibot {
     export enum paibot_lineFollowPort {
         //% block="Port 1"
         port1 = 0x01,
+        //% block="Port 2"
+        port2 = 0x02,
         //% block="Port 4"
         port4 = 0x04
     }
@@ -1225,39 +1227,56 @@ namespace paibot {
     export function paibot_readLineFollowerStatus(port: paibot_lineFollowPort, status: paibot_lineFollower): boolean {
         let s1 = 0;
         let s2 = 0;
-        led.enable(false);
-        switch (port) {
-            case paibot_lineFollowPort.port1:
-                s1 = pins.analogReadPin(AnalogPin.P4);
-                s2 = pins.analogReadPin(AnalogPin.P2);
-                s1 = s1 * 255 / 1023;
-                s2 = s2 * 255 / 1023;
-                break;
-            case paibot_lineFollowPort.port4:
-                s1 = pins.analogReadPin(AnalogPin.P3);
-                s2 = pins.analogReadPin(AnalogPin.P1);
-                s1 = s1 * 255 / 1023;
-                s2 = s2 * 255 / 1023;
-                break;                
-        }
-        led.enable(true);
-
-        if (s1 < 100)
-            s1 = 0;
-        else
-            s1 = 1;
-        if (s2 < 100)
-            s2 = 0;
-        else
-            s2 = 1;
         
+        if (port == paibot_lineFollowPort.port2) {
+            pins.setPull(DigitalPin.P13, PinPullMode.PullUp);
+            pins.setPull(DigitalPin.P14, PinPullMode.PullUp);
+            s1 = pins.digitalReadPin(DigitalPin.P13);
+            s2 = pins.digitalReadPin(DigitalPin.P14);
+            if(s1 > 0)
+                s1 = 0;
+            else
+                s1 = 1;
+            if(s2 > 0)
+                s2 = 0;
+            else
+                s2 = 1;
+        }
+        else {
+            led.enable(false);
+            switch (port) {
+                case paibot_lineFollowPort.port1:
+                    s1 = pins.analogReadPin(AnalogPin.P4);
+                    s2 = pins.analogReadPin(AnalogPin.P2);
+                    s1 = s1 * 255 / 1023;
+                    s2 = s2 * 255 / 1023;
+                    break;
+                case paibot_lineFollowPort.port4:
+                    s1 = pins.analogReadPin(AnalogPin.P3);
+                    s2 = pins.analogReadPin(AnalogPin.P1);
+                    s1 = s1 * 255 / 1023;
+                    s2 = s2 * 255 / 1023;
+                    break;                
+            }
+            led.enable(true);
+
+            if (s1 < 100)
+                s1 = 0;
+            else
+                s1 = 1;
+            if (s2 < 100)
+                s2 = 0;
+            else
+                s2 = 1;
+        }
+       
         let s = ((1 & s1) << 1) | s2;
         if (s == status) {
             return true;
         }
         else {
             return false;
-        }
+        }               
     }
 
     /**
@@ -1267,30 +1286,47 @@ namespace paibot {
     export function paibot_readLineFollowerValue(port: paibot_lineFollowPort, thod: number): number {
         let s1 = 0;
         let s2 = 0;
-        led.enable(false);
-        switch (port) {
-            case paibot_lineFollowPort.port1:
-                s1 = pins.analogReadPin(AnalogPin.P4);
-                s2 = pins.analogReadPin(AnalogPin.P2);
-                s1 = s1 * 255 / 1023;
-                s2 = s2 * 255 / 1023;
-                break;
-            case paibot_lineFollowPort.port4:
-                s1 = pins.analogReadPin(AnalogPin.P3);
-                s2 = pins.analogReadPin(AnalogPin.P1);
-                s1 = s1 * 255 / 1023;
-                s2 = s2 * 255 / 1023;
-                break;                
+
+        if (port == paibot_lineFollowPort.port2) {
+            pins.setPull(DigitalPin.P13, PinPullMode.PullUp);
+            pins.setPull(DigitalPin.P14, PinPullMode.PullUp);
+            s1 = pins.digitalReadPin(DigitalPin.P13);
+            s2 = pins.digitalReadPin(DigitalPin.P14);
+            if(s1 > 0)
+                s1 = 0;
+            else
+                s1 = 1;
+            if(s2 > 0)
+                s2 = 0;
+            else
+                s2 = 1;
         }
-        led.enable(true);
-        if (s1 < thod)
-            s1 = 0;
-        else
-            s1 = 1;
-        if (s2 < thod)
-            s2 = 0;
-        else
-            s2 = 1;
+        else {
+            led.enable(false);
+            switch (port) {
+                case paibot_lineFollowPort.port1:
+                    s1 = pins.analogReadPin(AnalogPin.P4);
+                    s2 = pins.analogReadPin(AnalogPin.P2);
+                    s1 = s1 * 255 / 1023;
+                    s2 = s2 * 255 / 1023;
+                    break;
+                case paibot_lineFollowPort.port4:
+                    s1 = pins.analogReadPin(AnalogPin.P3);
+                    s2 = pins.analogReadPin(AnalogPin.P1);
+                    s1 = s1 * 255 / 1023;
+                    s2 = s2 * 255 / 1023;
+                    break;                
+            }
+            led.enable(true);
+            if (s1 < thod)
+                s1 = 0;
+            else
+                s1 = 1;
+            if (s2 < thod)
+                s2 = 0;
+            else
+                s2 = 1;        
+        }
         
         return ((1 & s1) << 1) | s2;
     }

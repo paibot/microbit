@@ -117,6 +117,7 @@
 	"paibot.paibot_LineFollowerSensor.LFSensor_1|block":"循线传感器1",
 	"paibot.paibot_LineFollowerSensor.LFSensor_2|block":"循线传感器2",
 	"paibot.paibot_lineFollowPort.port1|block":"接口1",
+	"paibot.paibot_lineFollowPort.port2|block":"接口2",
 	"paibot.paibot_lineFollowPort.port4|block":"接口4",
 	"paibot.paibot_motionSensorType.motion_rotation|block":"旋转",
 	"paibot.paibot_motionSensorAxis.axis_x|block":"X轴",
