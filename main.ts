@@ -1234,13 +1234,13 @@ namespace paibot {
             s1 = pins.digitalReadPin(DigitalPin.P13);
             s2 = pins.digitalReadPin(DigitalPin.P14);
             if(s1 > 0)
-                s1 = 0;
-            else
                 s1 = 1;
-            if(s2 > 0)
-                s2 = 0;
             else
+                s1 = 0;
+            if(s2 > 0)
                 s2 = 1;
+            else
+                s2 = 0;
         }
         else {
             led.enable(false);
@@ -1293,13 +1293,13 @@ namespace paibot {
             s1 = pins.digitalReadPin(DigitalPin.P13);
             s2 = pins.digitalReadPin(DigitalPin.P14);
             if(s1 > 0)
-                s1 = 0;
-            else
                 s1 = 1;
-            if(s2 > 0)
-                s2 = 0;
             else
+                s1 = 0;
+            if(s2 > 0)
                 s2 = 1;
+            else
+                s2 = 0;
         }
         else {
             led.enable(false);
